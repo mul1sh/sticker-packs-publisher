@@ -1,0 +1,30 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "4.1.2",
+    "@material-ui/icons": "4.2.1",
+    "@types/react": "16.8.14",
+    "@types/react-dom": "16.8.4",
+    "content-hash": "2.3.2",
+    "react": "16.8.0",
+    "react-dom": "16.8.0",
+    "typeface-roboto": "0.0.54",
+    "typescript": "3.5.2",
+    "web3": "1.0.0-beta.55"
+  },
+  "devDependencies": {
+    "parcel-bundler": "1.12.3"
+  },
+  "scripts": {
+    "dev": "parcel public/index.html --host 127.0.0.1.xip.io --https",
+    "build": "parcel build public/index.html"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    "last 2 Chrome versions"
+  ]
+}
