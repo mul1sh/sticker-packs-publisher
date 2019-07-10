@@ -15,7 +15,7 @@ https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1577.md
 
 */
 function createDescription(name: String, author: String, thumbnail: String, preview: String, ids: String[]): string {
-  const stickers = ids.map(id => `{:hash "${id}"}`).join('" "');
+  const stickers = ids.map(id => `{:hash "${id}"}`).join('');
   // TODO add :hash
   return `{meta {:name      "${name}"
                  :author    "${author}"
