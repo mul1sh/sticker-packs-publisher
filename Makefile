@@ -13,10 +13,10 @@ dev:
 #  requires export NODE_OPTIONS=--max_old_space_size=4096
 	yarn run dev
 
-deploy-website: install compile
+deploy: install build
 	$(eval VERSION = $(shell git rev-parse --short HEAD))
 	$(eval MESSAGE = 'Deploying \#$(VERSION)')
-	./node_modules/gh-pages/bin/gh-pages.js --dotfiles --message ${MESSAGE} --dist resources/public
+	npx gh-pages --dotfiles --message ${MESSAGE} --dist dist
 
 clean:
 	rm -rf node_modules/ dist/ yarn.lock

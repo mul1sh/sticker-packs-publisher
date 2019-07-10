@@ -19,7 +19,7 @@
   },
   "scripts": {
     "dev": "parcel public/index.html --host 127.0.0.1.xip.io --https",
-    "build": "parcel build public/index.html"
+    "build": "parcel build public/index.html --public-url /sticker-packs-publisher/"
   },
   "eslintConfig": {
     "extends": "react-app"

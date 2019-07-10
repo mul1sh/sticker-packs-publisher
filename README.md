@@ -2,7 +2,7 @@ A simplistic UI to publish sticker packs.
 
 # Setup
 
-yarn
+make init
 
 ## Local dev env
 
