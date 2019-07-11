@@ -124,12 +124,13 @@ const Home = (props: any) => {
   const [name, setName] = useState("");
   const [author, setAuthor] = useState("");
   const [price, setPrice] = useState("");
-  const [thumbnail, setThumbnail] = useState("");
+  const [thumbnail, setPreview] = useState("");
+  const [preview, setBanner] = useState("");
   const [stickers, setStickers] = useState([]);
   const [hash, setHash] = useState("");
 
   const uploadDescription = async (_: any) => {
-    const res = await uploadFile(name, author, thumbnail, thumbnail, stickers);
+    const res = await uploadFile(name, author, thumbnail, preview, stickers);
     setHash(res.Hash);
   };
 
@@ -142,6 +143,11 @@ const Home = (props: any) => {
 
   const handleThumbnail = async (e: any) => {
     setThumbnail("");
+    ipfsAdd(e.target.files[0]).then(res => setThumbnail(res.Hash));
+  };
+
+  const handlePreview = async (e: any) => {
+    setPreview("");
     ipfsAdd(e.target.files[0]).then(res => setThumbnail(res.Hash));
   };
 
@@ -169,16 +175,31 @@ const Home = (props: any) => {
       <input
         accept="image/*"
         style={{ display: 'none' }}
-        id="raised-button-file"
+        id="raised-button-thumbnail"
         onChange={handleThumbnail}
         type="file"
       />
-      <label htmlFor="raised-button-file">
+      <label htmlFor="raised-button-thumbnail">
         <Button variant="contained" component="span">
           {thumbnail.length != 0 &&
             <CloudDone />  
           }
           Upload thumbnail
+        </Button>
+      </label> 
+      <input
+        accept="image/*"
+        style={{ display: 'none' }}
+        id="raised-button-preview"
+        onChange={handlePreview}
+        type="file"
+      />
+      <label htmlFor="raised-button-preview">
+        <Button variant="contained" component="span">
+          {preview.length != 0 &&
+            <CloudDone />  
+          }
+          Upload preview
         </Button>
       </label> 
       <input
