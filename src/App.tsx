@@ -25,6 +25,7 @@ function createDescription(name: String, author: String, thumbnail: String, prev
 }
 
 async function ipfsAdd(content: string | Blob) {
+  console.log("content" + content)
   const formData  = new FormData();
   formData.append("", content);
   const response = await fetch("https://ipfs.infura.io:5001/api/v0/add", {
@@ -51,81 +52,524 @@ var divStyle = {
   alignItems: "center"
 };
 
-const ABI = [{"constant":false,
-                       "inputs":[{"name":"_packId",
-                                  "type":"uint256"},
-                                 {"name":"_limit",
-                                  "type":"uint256"}],
-                       "name":"purgePack","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"interfaceId","type":"bytes4"}],
-                       "name":"supportsInterface","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},
-                       {"constant":true,"inputs":[],"name":"snt","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},
-                       {"constant":true,"inputs":[{"name":"tokenId","type":"uint256"}],"name":"getApproved","outputs":[{"name":"","type":"address"}],
-                       "payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"to","type":"address"},
-                       {"name":"tokenId","type":"uint256"}],"name":"approve","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},
-                       {"constant":false,"inputs":[{"name":"_price","type":"uint256"},{"name":"_donate","type":"uint256"},{"name":"_category","type":"bytes4[]"},
-                       {"name":"_owner","type":"address"},{"name":"_contenthash","type":"bytes"}],"name":"registerPack","outputs":[{"name":"packId","type":"uint256"}],
-                       "payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_owner","type":"address"},
-                       {"name":"_packId","type":"uint256"}],"name":"generateToken","outputs":[{"name":"tokenId","type":"uint256"}],"payable":false,"stateMutability":"nonpayable",
-                       "type":"function"},{"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"setBurnRate","outputs":[],"payable":false,"stateMutability":"nonpayable",
-                       "type":"function"},{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"to","type":"address"},{"name":"tokenId","type":"uint256"}],
-                       "name":"transferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"owner","type":"address"},
-                       {"name":"index","type":"uint256"}],"name":"tokenOfOwnerByIndex","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},
-                       {"constant":false,"inputs":[{"name":"_newController","type":"address"}],"name":"changeController","outputs":[],"payable":false,"stateMutability":"nonpayable",
-                       "type":"function"},{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"to","type":"address"},{"name":"tokenId","type":"uint256"}],
-                       "name":"safeTransferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_state","type":"uint8"}],
-                       "name":"setMarketState","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],
-                       "name":"packCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},
-                       {"constant":true,"inputs":[{"name":"tokenId","type":"uint256"}],"name":"ownerOf","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view",
-                       "type":"function"},{"constant":true,"inputs":[{"name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"","type":"uint256"}],"payable":false,
-                       "stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_packId","type":"uint256"},{"name":"_to","type":"address"}],"name":"setPackOwner",
-                       "outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_from","type":"address"},
-                       {"name":"","type":"uint256"},{"name":"_token","type":"address"},{"name":"_data","type":"bytes"}],"name":"receiveApproval","outputs":[],"payable":false,
-                       "stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_packId","type":"uint256"},{"name":"_destination","type":"address"}],
-                       "name":"buyToken","outputs":[{"name":"tokenId","type":"uint256"}],"payable":false,"stateMutability":"nonpayable","type":"function"},
-                       {"constant":false,"inputs":[{"name":"_value","type":"uint256"}],"name":"setRegisterFee","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},
-                       {"constant":false,"inputs":[{"name":"_packId","type":"uint256"},{"name":"_price","type":"uint256"},{"name":"_donate","type":"uint256"}],
-                       "name":"setPackPrice","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"tokenCount",
-                       "outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_category","type":"bytes4"}],
-                       "name":"getCategoryLength","outputs":[{"name":"size","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,
-                       "inputs":[{"name":"to","type":"address"},{"name":"approved","type":"bool"}],"name":"setApprovalForAll","outputs":[],"payable":false,
-                       "stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"tokenPackId",
-                       "outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_packId","type":"uint256"},
-                       {"name":"_category","type":"bytes4"}],"name":"addPackCategory","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},
-                       {"constant":true,"inputs":[{"name":"_tokenId","type":"uint256"}],"name":"getTokenData","outputs":[{"name":"category","type":"bytes4[]"},
-                       {"name":"timestamp","type":"uint256"},{"name":"contenthash","type":"bytes"}],"payable":false,"stateMutability":"view","type":"function"},
-                       {"constant":true,"inputs":[{"name":"_category","type":"bytes4"}],"name":"getAvailablePacks","outputs":[{"name":"availableIds","type":"uint256[]"}],
-                       "payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_category","type":"bytes4"},{"name":"_index","type":"uint256"}],
-                       "name":"getCategoryPack","outputs":[{"name":"packId","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_packId","type":"uint256"},
-                       {"name":"_mintable","type":"bool"}],"name":"setPackState","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],
-                       "name":"packs","outputs":[{"name":"owner","type":"address"},{"name":"mintable","type":"bool"},{"name":"timestamp","type":"uint256"},{"name":"price","type":"uint256"},{"name":"donate","type":"uint256"},
-                       {"name":"contenthash","type":"bytes"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"to","type":"address"},
-                       {"name":"tokenId","type":"uint256"},{"name":"_data","type":"bytes"}],"name":"safeTransferFrom","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},
-                       {"constant":true,"inputs":[],"name":"state","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"_packId",
-                       "type":"uint256"}],"name":"getPackData","outputs":[{"name":"category","type":"bytes4[]"},{"name":"owner","type":"address"},{"name":"mintable","type":"bool"},{"name":"timestamp","type":"uint256"},
-                       {"name":"price","type":"uint256"},{"name":"contenthash","type":"bytes"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_token","type":"address"}],
-                       "name":"claimTokens","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"_packId","type":"uint256"},{"name":"_category","type":"bytes4"}],
-                       "name":"removePackCategory","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"owner","type":"address"},
-                       {"name":"operator","type":"address"}],"name":"isApprovedForAll","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},
-                       {"constant":true,"inputs":[{"name":"owner","type":"address"}],"name":"tokensOwnedBy","outputs":[{"name":"tokenList","type":"uint256[]"}],"payable":false,"stateMutability":"view","type":"function"},
-                       {"constant":true,"inputs":[],"name":"controller","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_snt","type":"address"}],
-                       "payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"packId","type":"uint256"},{"indexed":false,"name":"dataPrice","type":"uint256"},
-                       {"indexed":false,"name":"_contenthash","type":"bytes"}],"name":"Register","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"category","type":"bytes4"},{"indexed":true,"name":"packId",
-                       "type":"uint256"}],"name":"Categorized","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"category","type":"bytes4"},{"indexed":true,"name":"packId","type":"uint256"}],
-                       "name":"Uncategorized","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"packId","type":"uint256"}],"name":"Unregister","type":"event"},{"anonymous":false,
-                       "inputs":[{"indexed":true,"name":"_token","type":"address"},{"indexed":true,"name":"_controller","type":"address"},{"indexed":false,"name":"_amount","type":"uint256"}],"name":"ClaimedTokens",
-                       "type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"state","type":"uint8"}],"name":"MarketState","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"value",
-                       "type":"uint256"}],"name":"RegisterFee","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"name":"value","type":"uint256"}],"name":"BurnRate","type":"event"},{"anonymous":false,
-                       "inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":true,"name":"tokenId","type":"uint256"}],"name":"Transfer","type":"event"},
-                       {"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"approved","type":"address"},{"indexed":true,"name":"tokenId","type":"uint256"}],
-                       "name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"operator","type":"address"},{"indexed":false,
-                       "name":"approved","type":"bool"}],"name":"ApprovalForAll","type":"event"}];
+const ABI = [
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_packId",
+        "type": "uint256"
+      },
+      {
+        "name": "_limit",
+        "type": "uint256"
+      }
+    ],
+    "name": "purgePack",
+    "outputs": [
+      
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      
+    ],
+    "name": "snt",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      
+    ],
+    "name": "stickerType",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "name": "_packId",
+        "type": "uint256"
+      }
+    ],
+    "name": "generateToken",
+    "outputs": [
+      {
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_value",
+        "type": "uint256"
+      }
+    ],
+    "name": "setBurnRate",
+    "outputs": [
+      
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_price",
+        "type": "uint256"
+      },
+      {
+        "name": "_donate",
+        "type": "uint256"
+      },
+      {
+        "name": "_category",
+        "type": "bytes4[]"
+      },
+      {
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "name": "_contenthash",
+        "type": "bytes"
+      },
+      {
+        "name": "_fee",
+        "type": "uint256"
+      }
+    ],
+    "name": "registerPack",
+    "outputs": [
+      {
+        "name": "packId",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_newController",
+        "type": "address"
+      }
+    ],
+    "name": "changeController",
+    "outputs": [
+      
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      
+    ],
+    "name": "stickerPack",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_price",
+        "type": "uint256"
+      },
+      {
+        "name": "_donate",
+        "type": "uint256"
+      },
+      {
+        "name": "_category",
+        "type": "bytes4[]"
+      },
+      {
+        "name": "_owner",
+        "type": "address"
+      },
+      {
+        "name": "_contenthash",
+        "type": "bytes"
+      }
+    ],
+    "name": "generatePack",
+    "outputs": [
+      {
+        "name": "packId",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_state",
+        "type": "uint8"
+      }
+    ],
+    "name": "setMarketState",
+    "outputs": [
+      
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_from",
+        "type": "address"
+      },
+      {
+        "name": "_value",
+        "type": "uint256"
+      },
+      {
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "name": "_data",
+        "type": "bytes"
+      }
+    ],
+    "name": "receiveApproval",
+    "outputs": [
+      
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_value",
+        "type": "uint256"
+      }
+    ],
+    "name": "setRegisterFee",
+    "outputs": [
+      
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getTokenData",
+    "outputs": [
+      {
+        "name": "category",
+        "type": "bytes4[]"
+      },
+      {
+        "name": "timestamp",
+        "type": "uint256"
+      },
+      {
+        "name": "contenthash",
+        "type": "bytes"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      
+    ],
+    "name": "state",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_newController",
+        "type": "address"
+      }
+    ],
+    "name": "migrate",
+    "outputs": [
+      
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_token",
+        "type": "address"
+      }
+    ],
+    "name": "claimTokens",
+    "outputs": [
+      
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_packId",
+        "type": "uint256"
+      },
+      {
+        "name": "_destination",
+        "type": "address"
+      },
+      {
+        "name": "_price",
+        "type": "uint256"
+      }
+    ],
+    "name": "buyToken",
+    "outputs": [
+      {
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      
+    ],
+    "name": "controller",
+    "outputs": [
+      {
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "name": "_snt",
+        "type": "address"
+      },
+      {
+        "name": "_stickerPack",
+        "type": "address"
+      },
+      {
+        "name": "_stickerType",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "_token",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "_controller",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "name": "_amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "ClaimedTokens",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "state",
+        "type": "uint8"
+      }
+    ],
+    "name": "MarketState",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "RegisterFee",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "BurnRate",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "packId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "dataPrice",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "name": "contenthash",
+        "type": "bytes"
+      }
+    ],
+    "name": "Register",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "name": "from",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "to",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "name": "value",
+        "type": "uint256"
+      }
+    ],
+    "name": "Transfer",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "controller",
+        "type": "address"
+      }
+    ],
+    "name": "NewController",
+    "type": "event"
+  }
+];
 
 const Home = (props: any) => {
   const [name, setName] = useState("");
   const [author, setAuthor] = useState("");
-  const [price, setPrice] = useState("");
-  const [thumbnail, setPreview] = useState("");
-  const [preview, setBanner] = useState("");
+  const [price, setPrice] = useState("0");
+  const [owner, setOwner] = useState("");
+  const [thumbnail, setThumbnail] = useState("");
+  const [preview, setPreview] = useState("");
   const [stickers, setStickers] = useState([]);
   const [hash, setHash] = useState("");
 
@@ -137,8 +581,13 @@ const Home = (props: any) => {
   const register = async (_: any) => {
     const addresses = await window.ethereum.enable();
     const web3 = new Web3(window.ethereum);
-    web3.eth.Contract(ABI, "0x39d16CdB56b5a6a89e1A397A13Fe48034694316E").methods
-      .registerPack("0", "0", ["0x00000000", "0x00000001"], addresses[0], "0x"+contentHash.fromIpfs(hash).replace('e30101', 'e301')).send({"from": addresses[0]} );
+    const donate = 0;
+    const category = ["0x00000000", "0x00000001"];
+    const address = owner == "" ? addresses[0] : owner;
+    const fee = 0;
+    const finalContentHash = "0x"+contentHash.fromIpfs(hash).replace('e30101', 'e301');
+    web3.eth.Contract(ABI, "0x6CC7274aF9cE9572d22DFD8545Fb8c9C9Bcb48AD").methods
+      .registerPack(web3.utils.toWei(price), donate, category, address, finalContentHash, 0).send({"from": addresses[0]} );
   };
 
   const handleThumbnail = async (e: any) => {
@@ -148,7 +597,7 @@ const Home = (props: any) => {
 
   const handlePreview = async (e: any) => {
     setPreview("");
-    ipfsAdd(e.target.files[0]).then(res => setThumbnail(res.Hash));
+    ipfsAdd(e.target.files[0]).then(res => setPreview(res.Hash));
   };
 
   const handleStickers = async (e: any) => {
@@ -159,7 +608,7 @@ const Home = (props: any) => {
     })
   };
 
-  const complete = name.length != 0 && author.length != 0 && thumbnail.length != 0 && stickers.length != 0;
+  const complete = name.length != 0 && author.length != 0 && thumbnail.length != 0 && preview.length != 0 && stickers.length != 0;
 
   return (
     <div id="form" style={divStyle}>
@@ -172,6 +621,9 @@ const Home = (props: any) => {
       <Input value={price}
              onChange={e => setPrice(e.target.value)}
              placeholder="Price" required/>
+      <Input value={owner}
+             onChange={e => setOwner(e.target.value)}
+             placeholder="Owner" required/>
       <input
         accept="image/*"
         style={{ display: 'none' }}
